@@ -1,0 +1,25 @@
+#!/bin/sh
+mount -t devtmpfs none /dev
+mount -t proc /proc /proc
+mount -t sysfs none /sys
+
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+echo --- CUSTOM INIT STARTED --- > /dev/kmsg
+
+modprobe -v ufshcd-core
+modprobe -v ufshcd-pltfrm
+modprobe -v ufs_qcom
+modprobe -v sdhci
+modprobe -v sdhci-msm
+modprobe -v udc-core
+
+modprobe -v gcc-sm8450
+modprobe -v dispcc-sm8450
+#modprobe -v pinctrl-sm8450
+#modprobe -v pinctrl-sm8450-lpass-lpi
+modprobe -v qnoc-sm8450
+
+echo --- custom INIT ENDED --- > /dev/kmsg
+
+exec /bin/bash
